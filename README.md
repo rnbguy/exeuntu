@@ -1,13 +1,16 @@
 # exeuntu
 
-exeuntu is available at http://ghcr.io/boldsoftware/exeuntu
+Create an exe.dev VM from the published Arch Linux image:
 
-exeuntu is the default base image for [exe.dev](https://exe.dev/). It is kitted-out
-for developers, based on ubuntu24.04, and includes systemd.
+```sh
+ssh exe.dev new --image=ghcr.io/rnbguy/exearch
+```
+
+This branch ports the [exe.dev](https://exe.dev/) default base image to Arch Linux
+x86_64. It is kitted-out for developers and includes systemd.
 
 We believe that minimal containers make for terrible developer (and agent)
-experiences, so exeuntu includes a lot of stuff, mostly from apt.
+experiences, so exeuntu includes a lot of stuff, mostly from pacman and the AUR.
 
 You can build exeuntu with Docker, but running it, including systemd,
 is difficult with Docker.
-

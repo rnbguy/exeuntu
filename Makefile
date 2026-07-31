@@ -2,8 +2,8 @@ default: build-exeuntu
 
 build-exeuntu: ## Build the exeuntu Docker image locally
 	@echo "Building exeuntu Docker image..."
-	docker build -t ghcr.io/boldsoftware/exeuntu:latest .
-	@echo "✓ Image built locally as ghcr.io/boldsoftware/exeuntu:latest"
+	docker build -t ghcr.io/rnbguy/exearch:latest .
+	@echo "Image built locally as ghcr.io/rnbguy/exearch:latest"
 
 build: build-exeuntu
 
@@ -17,7 +17,7 @@ run: build-exeuntu
 	  --tmpfs /run/lock \
 	  --tmpfs /tmp \
 	  --tmpfs /sys/fs/cgroup:rw \
-	  ghcr.io/boldsoftware/exeuntu:latest
+	  ghcr.io/rnbguy/exearch:latest
 
 run-bash: build-exeuntu
 	docker run -it \
@@ -29,4 +29,4 @@ run-bash: build-exeuntu
 	  --tmpfs /run/lock \
 	  --tmpfs /tmp \
 	  --tmpfs /sys/fs/cgroup:rw \
-	  ghcr.io/boldsoftware/exeuntu:latest bash
+	  ghcr.io/rnbguy/exearch:latest bash
