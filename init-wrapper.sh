@@ -4,7 +4,7 @@
 #
 # Generally, "--privileged" is enough to run; you'll see more
 # output with
-# 	docker run -it ghcr.io/boldsoftware/exeuntu:latest
+# 	docker run -it ghcr.io/rnbguy/exearch:latest
 
 echo "Docker users can use Ctrl-P Ctrl-Q to detach."
 
