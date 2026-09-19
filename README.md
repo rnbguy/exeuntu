@@ -22,6 +22,21 @@ when the workflow file exists on the repository's default branch; copy
 `.github/workflows/publish-archlinux.yaml` there to enable those triggers. The
 workflow explicitly checks out `archlinux` for scheduled and manual builds.
 
-AUR recipe commits are pinned in the Dockerfile and must be updated deliberately.
+The `yay-bin` AUR recipe commit is pinned and must be updated deliberately.
 This does not freeze Arch's official packages or make the entire image reproducible.
 The image includes the prebuilt `yay-bin` AUR helper.
+
+Oh My Pi (`omp`) follows the latest `oh-my-pi-bin` AUR recipe. Every CI build,
+including the weekly refresh, rebuilds the runtime stage without cache to pick
+up the latest version packaged in the AUR. Its
+`~/.omp/agent/models.yml` configures the VM-local `llm` integration without API
+keys. OMP discovers models from `https://llm.int.exe.xyz/v1/models` and sends
+requests to `/v1/chat/completions`, including for custom providers exposed by
+the integration. Discovery happens at runtime, not during the image build, and
+requires the integration to be attached to the VM.
+
+Inside the VM, run `omp models refresh`, then `omp models exe-dev` to see the
+available models. Select one with `omp --model exe-dev/<model-id>`. For a
+differently named integration, change the hostname in `~/.omp/agent/models.yml`.
+Update `omp` through `yay`; `exeuntu update pi` manages the separate upstream
+`pi` binary.

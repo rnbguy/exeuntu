@@ -280,6 +280,24 @@ RUN chmod 644 /var/www/html/index.html && nginx -t
 COPY xterm-ghostty.terminfo /tmp/xterm-ghostty.terminfo
 RUN tic -x - < /tmp/xterm-ghostty.terminfo && rm /tmp/xterm-ghostty.terminfo
 
+# Install the prebuilt Oh My Pi release independently of upstream Pi, whose
+# binary is owned by exeuntu update. Follow the latest AUR recipe; CI rebuilds
+# this stage without cache so scheduled builds pick up new releases.
+USER exedev
+RUN git clone https://aur.archlinux.org/oh-my-pi-bin.git /home/exedev/oh-my-pi-bin && \
+    cd /home/exedev/oh-my-pi-bin && \
+    makepkg -si --noconfirm --needed && \
+    omp --version && \
+    cd /home/exedev && \
+    rm -rf /home/exedev/oh-my-pi-bin && \
+    sudo pacman -Scc --noconfirm
+
+RUN mkdir -p /home/exedev/.omp/agent && \
+    ln -s /home/exedev/.config/shelley/AGENTS.md /home/exedev/.omp/agent/AGENTS.md
+COPY --chown=exedev:exedev omp-models.yml /home/exedev/.omp/agent/models.yml
+
+USER root
+
 # Empty the machine ID baked in by package configuration, so each VM built from
 # this image generates its own on first boot. A shared one defeats anything that
 # assumes machine IDs are unique, such as systemd's FixedRandomDelay=. Empty

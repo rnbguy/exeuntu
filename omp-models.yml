@@ -1,0 +1,11 @@
+# Discovery runs inside the VM against https://llm.int.exe.xyz/v1/models.
+# The integration accepts OpenAI Chat Completions and authenticates the VM;
+# no model list or provider credentials are baked into the image.
+providers:
+  exe-dev:
+    baseUrl: https://llm.int.exe.xyz/v1
+    api: openai-completions
+    auth: none
+    discovery:
+      type: openai-models-list
+      timeoutMs: 5000
